@@ -1,0 +1,10 @@
+{
+    "name": "thuqu/exo-clinic-routing-app",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {}
+}
