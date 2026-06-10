@@ -12,7 +12,7 @@ class HomeController
     {
         Response::view('home', [
             'title' => 'EXO Clinic Routing App',
-            'message' => 'Week 3 - Front Controller, Router and Standard Response'
+            'message' => 'Mini Clinic Appointment Portal'
         ]);
     }
 

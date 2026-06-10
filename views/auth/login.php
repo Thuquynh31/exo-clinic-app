@@ -29,6 +29,11 @@ $title = $title ?? 'Login';
     <h1>Clinic Login</h1>
 
     <p>This page demonstrates redirect response.</p>
+    <?php if ($error = flash_get('error')): ?>
+        <div class="alert danger">
+            <?= h($error) ?>
+        </div>
+    <?php endif; ?>
 
     <form class="form-card" method="POST" action="/login">
 

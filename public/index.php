@@ -4,11 +4,25 @@ declare(strict_types=1);
 
 use App\Controllers\AuthController;
 use App\Controllers\AppointmentController;
+use App\Controllers\DashboardController;
 use App\Controllers\HealthController;
 use App\Controllers\HomeController;
 use App\Core\Router;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
+$isHttps =
+    !empty($_SERVER['HTTPS'])
+    && $_SERVER['HTTPS'] !== 'off';
+
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'secure' => $isHttps,
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+
+session_start();
 
 if (php_sapi_name() === 'cli-server') {
     $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
@@ -38,7 +52,17 @@ $router->get('/login', [AuthController::class, 'login']);
 
 $router->post('/login', [AuthController::class, 'handleLogin']);
 
-$router->get('/logout', [AuthController::class, 'logout']);
+$router->post('/logout', [AuthController::class, 'logout']);
+
+$router->get('/dashboard', [
+    DashboardController::class,
+    'index'
+]);
+
+$router->get('/session-demo', [
+    DashboardController::class,
+    'sessionDemo'
+]);
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 

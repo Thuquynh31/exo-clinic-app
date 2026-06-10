@@ -2,7 +2,6 @@
 
 $title = $title ?? 'Appointments';
 $appointments = $appointments ?? [];
-$created = $created ?? false;
 
 function appointmentStatus(int $slots): string
 {
@@ -29,51 +28,69 @@ function appointmentClass(int $slots): string
 
     return 'success';
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($title) ?></title>
+
+    <title><?= h($title) ?></title>
+
     <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
 
 <header class="topbar">
-    <strong>EXO Clinic Routing App</strong>
+
+    <strong>🏥 EXO Clinic Routing App</strong>
 
     <nav>
-        <a href="/">Home</a>
-        <a href="/appointments">Appointments</a>
-        <a href="/appointments/create">Create Appointment</a>
-        <a href="/health">Health</a>
-        <a href="/login">Login</a>
+        <a href="/">🏠 Home</a>
+        <a href="/appointments">📅 Appointments</a>
+        <a href="/appointments/create">
+            ➕ Create Appointment
+        </a>
+        <a href="/health">💚 Health</a>
+        <a href="/dashboard">📊 Dashboard</a>
     </nav>
+
 </header>
 
 <main class="container">
 
-    <?php if ($created): ?>
+    <?php if ($success = flash_get('success')): ?>
         <div class="alert success">
-            Appointment created successfully.
+            <?= h($success) ?>
         </div>
     <?php endif; ?>
 
     <div class="page-header">
+
         <div>
+
             <h1>Appointment Schedule</h1>
-            <p>This page is handled by AppointmentController@index</p>
+
+            <p>
+                This page is handled by AppointmentController@index
+            </p>
+
         </div>
 
-        <a class="button" href="/appointments/create">
+        <a
+            class="button"
+            href="/appointments/create"
+        >
             Create Appointment
         </a>
+
     </div>
 
     <table>
 
         <thead>
+
             <tr>
                 <th>ID</th>
                 <th>Doctor</th>
@@ -81,6 +98,7 @@ function appointmentClass(int $slots): string
                 <th>Slots</th>
                 <th>Status</th>
             </tr>
+
         </thead>
 
         <tbody>
@@ -88,19 +106,37 @@ function appointmentClass(int $slots): string
         <?php foreach ($appointments as $appointment): ?>
 
             <tr>
-                <td><?= htmlspecialchars((string) $appointment['id']) ?></td>
-
-                <td><?= htmlspecialchars($appointment['doctor']) ?></td>
-
-                <td><?= htmlspecialchars($appointment['date']) ?></td>
-
-                <td><?= htmlspecialchars((string) $appointment['slots']) ?></td>
 
                 <td>
-                    <span class="badge <?= appointmentClass((int) $appointment['slots']) ?>">
-                        <?= appointmentStatus((int) $appointment['slots']) ?>
-                    </span>
+                    <?= h((string) $appointment['id']) ?>
                 </td>
+
+                <td>
+                    <?= h($appointment['doctor']) ?>
+                </td>
+
+                <td>
+                    <?= h($appointment['date']) ?>
+                </td>
+
+                <td>
+                    <?= h((string) $appointment['slots']) ?>
+                </td>
+
+                <td>
+
+                    <span
+                        class="badge <?= appointmentClass(
+                            (int) $appointment['slots']
+                        ) ?>"
+                    >
+                        <?= appointmentStatus(
+                            (int) $appointment['slots']
+                        ) ?>
+                    </span>
+
+                </td>
+
             </tr>
 
         <?php endforeach; ?>
