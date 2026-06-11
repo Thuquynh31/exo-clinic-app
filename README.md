@@ -260,15 +260,9 @@ Please login first.
 ---
 
 ## Demonstration Video
-
-```text
 https://drive.google.com/file/d/1xERtvlamzit7ahaDznkPL0ZWa8S17muN/view?usp=sharing
-
----
 
 
 ## Author
 
 Thu Quynh
-
-Lab04 – Mini Clinic Appointment Portal
